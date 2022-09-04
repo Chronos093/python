@@ -80,6 +80,11 @@ def switch(case):
 
 
 if __name__ == "__main__":
-    cond = os.popen("sudo brightnessctl --device 'input9::scrolllock' get").read().rstrip('\n')
+# Resgata o dispositivo que está associado ao led
+    commandLed = os.popen("brightnessctl | grep Device | awk '{print $2}' | cut -d ':' -f 1 | cut -c2-")
+# Utiliza o rstrip para remover a quebra de linha no final do comando anterior
+    inputLed = commandLed.read().rstrip('\n')
+
+    cond = os.popen("sudo brightnessctl --device '" + inputLed + "::scrolllock' get").read().rstrip('\n')
     
     checkPack()
