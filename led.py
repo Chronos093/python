@@ -1,10 +1,13 @@
 #!/bin/bash
 # Script para ligar os leds do teclado
-# ver. 0.001 - primeira versão do script
+# ver. 0.01 - primeira versão do script
+# ver. 0.02 - adiciona condição para ligar e desligar o led
 
 # Importa modulos do sistema
 import os
 import getpass
+
+cond = os.popen("brightnessctl | grep Max\ brightness | awk '{print $3}'")
 
 # Solicita a senha sudo para rodar os comandos com elevação
 password = getpass.getpass("Digite a senha de super usuário: ")
