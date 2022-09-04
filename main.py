@@ -2,10 +2,42 @@
 # Script para ligar os leds do teclado
 # ver. 0.01 - primeira versão do script
 # ver. 0.02 - adiciona condição para ligar e desligar o led, e renomeado o nome do arquivo para main
+# ver. 0.03 - verifica se o pacote BRINGHTNESSCTL está instalado, caso não o instala.
 
 # Importa modulos do sistema
 import os
 import getpass
+import time
+
+
+# Função que verifica se o pacote está instalado
+def checkPack():
+    packaget = os.popen("which brightnessctl").read().rstrip('\n')    # verifica o pacote
+
+    if packaget == "":    # válida se a variável packaget está vazia
+        os.system("clear")
+
+        print("O seguinte pacote será instalado: Brightnessctl")
+        time.sleep(5.5)    # Pausa a execução por 5.5 secundos
+        os.system("clear")
+
+        # Solicita a senha sudo para rodar os comandos com elevação
+        password = getpass.getpass("Digite a senha de super usuário: ")
+
+        os.system("echo " + password + " | sudo -S apt install brightnessctl")    # instala o pacote
+
+        time.sleep(3.0)    # Pausa a execução por 3.0 secundos
+        os.system("clear")
+        print("Pacote instalado com sucesso! Execute o script novamente.")
+        time.sleep(5.5)    # Pausa a execução por 5.5 secundos
+
+        exit()        
+    else:
+        os.system("clear")
+
+        function = switch(case=cond)
+        function()
+
 
 # Função para ligar as luzes
 def functionUp():
@@ -50,5 +82,4 @@ def switch(case):
 if __name__ == "__main__":
     cond = os.popen("sudo brightnessctl --device 'input9::scrolllock' get").read().rstrip('\n')
     
-    function = switch(case=cond)
-    function()
+    checkPack()
