@@ -1,10 +1,14 @@
 import paramiko
 
-client = paramiko.SSHClient()
-client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-client.connect('HOST', port=22, username='USERNAME', password='PASSWORD')
+host = "ip_client"
+user = "test"
+password = "123456"
 
-channel = client.get_transport().open_session()
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(host, port=22, username=user, password=password)
+
+channel = ssh.get_transport().open_session()
 channel.invoke_shell()
 
 while channel.recv_ready():
